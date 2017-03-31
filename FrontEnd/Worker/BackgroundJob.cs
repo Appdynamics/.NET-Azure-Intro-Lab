@@ -40,8 +40,11 @@ namespace FrontEnd.Worker
         {
             lock(this)
             {
-                token = new CancellationTokenSource();
-                worker = Task.Run(async () => await RunLoop(), token.Token);
+                if (token == null)
+                {
+                    token = new CancellationTokenSource();
+                    worker = Task.Run(async () => await RunLoop(), token.Token);
+                }
             }
         }
 
